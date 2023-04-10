@@ -13,6 +13,7 @@
     "vite": "^4.2.0"
   },
   "dependencies": {
+    "clipboard": "^2.0.11",
     "pexels": "^1.4.0",
     "sass": "^1.61.0"
   }

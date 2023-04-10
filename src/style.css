@@ -1,9 +1,10 @@
-body{
+ body{
   text-align: center;
   margin: 0;
   background-color: lightcyan;
   font-family: 'Poppins', sans-serif;
 }
+
 .btn-eye{
   width: 150px;
   height: 75px;
@@ -21,17 +22,41 @@ body{
   
 }
 
+.btn-copy{
+  width: 150px;
+  height: 75px;
+  color: black;
+  background-color: lightgreen;
+  border-color: white;
+  border-style: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  
+}
 .txt-result{
   font-size: 20px;
 }
-
-.hex{
-  font-size: 20px
+div{
+  width: 150px;
+  margin: auto;
+  border-radius: 15px;
 }
-img{
-  width: 50%;
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
-
 .container{
   padding: 80px;
 }

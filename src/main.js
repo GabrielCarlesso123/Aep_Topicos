@@ -1,52 +1,39 @@
 import './style.css'
 
-const startButton = document.querySelector("#start-button");
-const resultElement = document.querySelector("#result");
-const imageContainer = document.querySelector("#image-container");
+document.getElementById("start-button").addEventListener("click", () => {
+  const resultElement = document.getElementById("result");
 
-// Função que retorna uma imagem aleatória da API do Unsplash com a cor passada como parâmetro
-async function getUnsplashImage(color) {
-    const unsplashAccessKey = "N76zOtlWY0M1val14JQPR2C4TXyDhZcsvYy9RBSxibk";
-    const url = "https://api.unsplash.com/search/photos?query=$%7Bcolor%7D";
-    const headers = { Authorization: `Client-ID ${unsplashAccessKey}`};
+  if (!window.EyeDropper) {
+    resultElement.textContent =
+      "Seu navegador não suporta a API";
+    return;
+  }
 
-    try {
-        const response = await fetch(url, { headers });
-        const data = await response.json();
+  const eyeDropper = new EyeDropper();
 
-        if (data && data.results && data.results.length > 0) {
-            const { urls, alt_description } = data.results[0];
-            const img = document.createElement("img");
-            img.src = urls.regular;
-            img.alt = alt_description;
-            imageContainer.innerHTML ='';
-            imageContainer.appendChild(img);
-        } else {
-            console.log('Não foi possível encontrar uma imagem correspondente para a cor selecionada.');
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
+  eyeDropper
+    .open()
+    .then((result) => {
+      resultElement.textContent = result.sRGBHex;
+      resultElement.style.backgroundColor = result.sRGBHex;
+    })
+    .catch((e) => {
+      resultElement.textContent = e;
+    });
+});
 
-// Event listener para o botão que inicia a captura da cor
-startButton.addEventListener("click", () => {
-    if (!window.EyeDropper) {
-        resultElement.textContent = "Your browser does not support the EyeDropper API";
-        return;
-    }
+document.getElementById("copy-button").addEventListener("click", () => {
+  const resultElement = document.getElementById("result");
+  const color = resultElement.textContent;
 
-    const eyeDropper = new EyeDropper();
+  navigator.clipboard.writeText(color).then(() => {
+    const popup = document.createElement("div");
+    popup.classList.add("popup");
+    popup.textContent = "Sua cor foi copiada!";
+    document.body.appendChild(popup);
 
-    eyeDropper
-        .open()
-        .then((result) => {
-            const color = result.sRGBHex;
-            resultElement.textContent = color;
-            resultElement.style.backgroundColor = color;
-            getUnsplashImage(color);
-        })
-        .catch((e) => {
-            resultElement.textContent = e;
-        });
+    setTimeout(() => {
+      document.body.removeChild(popup);
+    }, 2000);
+  });
 });
